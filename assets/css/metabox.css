@@ -1,0 +1,51 @@
+#pbbog-meta-btn {
+    cursor: pointer;
+    color: #ffffff;
+    position: fixed;
+    z-index: 1;
+    top: 45%;
+    background-image: radial-gradient(white -25%, red);
+    width: 25px;
+    height: 50px;
+    border-radius: 0 25px 25px 0;
+    display: flex;
+    align-items: center;
+}
+
+#pbbog-meta-box-id .postbox-header {
+    display: none;
+}
+
+div#pbbog_fileshow {
+    position: fixed;
+    width: 80%;
+    height: 80%;
+    overflow: scroll;
+    top: 10%;
+    left: 10%;
+    background-color: #ffffff;
+    z-index: 1051;
+    padding: 1rem;
+    border-radius: 10px;
+    display: none;
+}
+
+#pbbog_filecontent {
+    width: 100%;
+}
+
+#pbbog_fileshow_mini {
+    z-index: 1053;
+    width: 130px;
+    height: 40px;
+    background: #b1b1b1;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    border-radius: 4px;
+    display: none;
+}
+
+li[data-type=blob] {
+    cursor: pointer;
+}

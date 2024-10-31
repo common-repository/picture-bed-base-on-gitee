@@ -1,0 +1,133 @@
+<!-- 磁贴 -->
+<div id="pbbog-meta-btmtemp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-images"
+    viewBox="0 0 16 16">
+    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+    <path
+      d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z" />
+  </svg>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="pbbog_giteebedtem" tabindex="-1" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pbbog_giteebedLabel">仓库名称</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="pills-gitls-tab" data-toggle="pill" href="#pills-gitls" role="tab"
+              aria-controls="pills-gitls" aria-selected="false">仓库目录</a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a class="nav-link" id="pills-files-tab" data-toggle="pill" href="#pills-files" role="tab"
+              aria-controls="pills-files" aria-selected="false">文件</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade active show" id="pills-gitls" role="tabpanel" aria-labelledby="pills-gitls-tab">
+            <button class="btn btn-primary btn-sm" id="pbbog_refresh_dir">刷新</button>
+            <div id="pbbog_trees">
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="pills-files" role="tabpanel" aria-labelledby="pills-files-tab">
+            <div class="d-flex justify-content-between">
+              <h5>上传文件</h5>
+              <a class="btn btn-primary btn-sm mb-1" id="pbbog_gitee_pages">Pages部署</a>
+            </div>
+            <form action="#">
+              <div class="form-group">
+                <label for="pbbog_files_dir">目录</label>
+                <input type="text" class="form-control" name="pbbog_files_dir" placeholder="为空默认根目录;/结尾,开头不带/">
+              </div>
+              <div class="form-group">
+                <input type="file" class="form-control-file" name="pbbog_files_inputs" id="pbbog_files_inputs" multiple>
+                <p id="pbbog_files_uptypes"></p>
+              </div>
+              <div class="form-group">
+                <label for="pbbog_files_message">提交信息</label>
+                <input type="text" class="form-control" name="pbbog_files_message">
+              </div>
+              <button type="button" class="btn btn-primary" id="pbbog_file_upyesbtn">确认上传</button>
+              <button type="button" class="btn btn-secondary" id="pbbog_file_resetbtn">重置</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 文件内容框 -->
+<div id="pbbog_fileshowtem">
+  <div class="row mb-2">
+    <div class="col-10">
+      <div class="btn-group" role="group" aria-label="Basic example" id="pbbog_file_todos">
+        <button type="button" class="btn btn-primary" data-todo="update">更新</button>
+        <button type="button" class="btn btn-warning" data-todo="del">删除</button>
+        <button type="button" class="btn btn-info" data-todo="download">下载</button>
+        <button type="button" class="btn btn-success" data-todo="copy">复制链接</button>
+        <button type="button" class="btn btn-success" id="pbbog_htmltxt" data-todo="htmltxt"
+          style="display: none;">text</button>
+      </div>
+      <span id="pbbog_dirbox" class="ml-2 border" style="
+    width: 50%;
+    max-width: 100%;
+    display: inline-block;
+">📂<span>/</span></span>
+    </div>
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrows-move mr-4"
+        id="pbbog_movebtn" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z">
+        </path>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="gbdb_closefileshide"
+        class="bi bi-arrow-down-left mr-3" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M2 13.5a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1H3.707L13.854 2.854a.5.5 0 0 0-.708-.708L3 12.293V7.5a.5.5 0 0 0-1 0v6z">
+        </path>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" id="gbdb_closefilesclose"
+        class="bi bi-x" viewBox="0 0 16 16">
+        <path
+          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z">
+        </path>
+      </svg>
+    </div>
+  </div>
+  <div class="row">
+    <div id="pbbog_filecontent" class="m-3">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-info" role="status"><span class="sr-only">Loading...</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 显示隐藏文件预览窗的小窗 -->
+<div id="pbbog_fileshow_minitem" class="align-items-center justify-content-between p-2">
+  <span>继续浏览</span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right"
+    viewBox="0 0 16 16">
+    <path fill-rule="evenodd"
+      d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z">
+    </path>
+  </svg>
+</div>
+
+<!-- 下载a -->
+<a id="pbbog_downloadfiletem" target="_blank" href="" download=""><span>下载</span></a>

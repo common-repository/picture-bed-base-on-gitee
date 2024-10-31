@@ -1,0 +1,311 @@
+<style>
+    .wp-die-message,
+    p {
+        font-size: 15px;
+    }
+
+    #wpcontent {
+        background: #c1dffb;
+    }
+
+    #showtags {
+        position: fixed;
+        z-index: 1;
+        right: .5%;
+        display: none;
+    }
+
+    #overtime_block {
+        display: none;
+    }
+
+    #overtime_block+p.text-muted {
+        display: none;
+    }
+
+    .bd-callout {
+        padding: 1.25rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+        border: 1px solid #eee;
+        border-left-width: .25rem;
+        border-radius: .25rem;
+    }
+
+    .bd-callout-warning {
+        border-left-color: rgb(181, 107, 3);
+    }
+</style>
+<div class="container">
+    <div id="showtags"></div>
+    <div class="row mt-1">
+        <div class="col-8">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="pills-account-tab" data-toggle="pill" href="#pills-account"
+                        role="tab" aria-controls="pills-account" aria-selected="false">账户设置</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="pills-help-tab" data-toggle="pill" href="#pills-help" role="tab"
+                        aria-controls="pills-help" aria-selected="false">使用帮助</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="pills-about-tab" data-toggle="pill" href="#pills-about" role="tab"
+                        aria-controls="pills-about" aria-selected="false">关于</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade active show" id="pills-account" role="tabpanel"
+                    aria-labelledby="pills-account-tab">
+                    <p id="overtime_block">过期时间:<span id="overtime"></span><br />现在时间:<span id="curtime"></span></p>
+                    <p class="text-muted">只有最新且有效的accessToken才能操作你的仓库;请放心,程序会自动更新无需你手动操作</p>
+                    <form path="init">
+                        <div class="form-group row">
+                            <label for="account" class="col-sm-2 col-form-label">邮箱</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control-plaintext" id="account" name="email" value=""
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-2 col-form-label">密码</label>
+                            <div class="col-sm-4">
+                                <input type="password" class="form-control-plaintext" id="password" name="password"
+                                    value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="client_id" class="col-sm-2 col-form-label">client_id</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="client_id" name="client_id"
+                                    value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="client_secret" class="col-sm-2 col-form-label">client_secret</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="client_secret"
+                                    name="client_secret" value="" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="owner" class="col-sm-2 col-form-label">owner</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="owner" name="owner" value=""
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="repo" class="col-sm-2 col-form-label">repo</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="repo" name="repo" value=""
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="branche" class="col-sm-2 col-form-label">branche</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control-plaintext" id="branche" name="branche" value=""
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="scope" class="col-sm-2 col-form-label">scope</label>
+                            <div class="scopes">
+                                <div class="form-check">
+                                    <input type="checkbox" value="user_info" id="user_info" name="scopes" readonly>
+                                    <label class="form-check-label" for="user_info">
+                                        <span class="mr-1">user_info</span>
+                                        访问用户的个人信息、最新动态等
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="projects" id="projects" name="scopes" readonly>
+                                    <label class="form-check-label" for="projects">
+                                        <span class="mr-1">projects</span>
+                                        查看、创建、更新用户的项目
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="pull_requests" id="pull_requests" name="scopes"
+                                        readonly>
+                                    <label class="form-check-label" for="pull_requests">
+                                        <span class="mr-1">pull_requests</span>
+                                        查看、发布、更新用户的 Pull Request
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="issues" id="issues" name="scopes" readonly>
+                                    <label class="form-check-label" for="issues">
+                                        <span class="mr-1">issues</span>
+                                        查看、发布、更新用户的 Issue
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="notes" id="notes" name="scopes" readonly>
+                                    <label class="form-check-label" for="notes">
+                                        <span class="mr-1">notes</span>
+                                        查看、发布、管理用户在项目、代码片段中的评论
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="keys" id="keys" name="scopes" readonly>
+                                    <label class="form-check-label" for="keys">
+                                        <span class="mr-1">keys</span>
+                                        查看、部署、删除用户的公钥
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="hook" id="hook" name="scopes" readonly>
+                                    <label class="form-check-label" for="hook">
+                                        <span class="mr-1">hook</span>
+                                        查看、部署、更新用户的 Webhook
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="groups" id="groups" name="scopes" readonly>
+                                    <label class="form-check-label" for="groups">
+                                        <span class="mr-1">groups</span>
+                                        查看、管理用户的组织以及成员
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="gists" id="gists" name="scopes" readonly>
+                                    <label class="form-check-label" for="gists">
+                                        <span class="mr-1">gists</span>
+                                        查看、删除、更新用户的代码片段
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="enterprises" id="enterprises" name="scopes" readonly>
+                                    <label class="form-check-label" for="enterprises">
+                                        <span class="mr-1">enterprises</span>
+                                        查看、管理用户的企业以及成员
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" value="emails" id="emails" name="scopes" readonly>
+                                    <label class="form-check-label" for="emails">
+                                        <span class="mr-1">emails</span>
+                                        查看用户的个人邮箱信息
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="scopes_all" name="scopes_all" readonly>
+                                    <label class="form-check-label" for="scopes_all">
+                                        全选
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="auto_retoken" name="auto_retoken">
+                            <label class="custom-control-label" for="auto_retoken">自动更新Token</label>
+                            <p class="help text-muted">每小时检测是否应该更新至最新的accesstoken,只有最新的且有效的accesstoken才能操作你的仓库(建议开启)</p>
+                        </div> -->
+                        <button type="button" class="btn btn-outline-primary form" disabled>提交</button>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="pills-help" role="tabpanel" aria-labelledby="pills-help-tab">
+                    <div class="bd-callout bd-callout-warning">
+                        <h6>
+                            当你安装本插件并启用后，你将会被引导到<b>"设置-Gitee图床-账号设置"</b>,你需要一些初始化操作
+                        </h6>
+                    </div>
+                    <ul style="list-style: decimal;">
+                        <li>按顺序填写,填写好你的码云账号和密码,账号强烈<b>建议使用邮箱</b></li>
+                        <li>client_id和client_secret
+                            <p>你完全可以继续使用本插件默认配置,当然你也可以前往码云创建自己的第三方应用<a href="https://gitee.com/oauth/applications"
+                                    target="_blank">如何获取?立刻前往</a></p>
+                        </li>
+                        <li>owner
+                            <p>owner，请你登录码云后前往个人主页获取,你应该能看到你的头像下方昵称的下面有一串类似"@xxx-xxx",此值(xxx-xxx)便是你的owner;还有更简单的,进入个人主页后,该页的url除去域名后的值也是owner
+                            </p>
+                        </li>
+                        <li>repo
+                            <p>你的仓库名字</p>
+                        </li>
+                        <li>branche
+                            <p>该仓库分支,只能填<b>一个</b></p>
+                        </li>
+                        <li>scope
+                            <p>第三方应用获取到的权限;这取决于第三方应用的scope;和第三方应用scopes是完全相等关系,请注意选择,确保完全正确,一致。但如果<b>你使用的是本插件</b>的第三方应用,你可以忽略此项,但<b>不要更改</b>;
+                            </p>
+                        </li>
+                        <li>当你做完这一切后,点击提交吧!如若没问题,屏幕右侧将会提示你操作成功;若提示操作失败请认真核对,确实无误但还是出现报错的情况请及时联系我(附上错误截图/文本)
+                        </li>
+                    </ul>
+                    <hr>
+                    <h3>如何使用</h3>
+                    <p>你需要打开文章编辑器,然后你可以看到屏幕左侧有一个小半圆,点击它就能使用并进行各种操作了</p>
+                    <p>为什么如此设计?目前就如此设计,因为既然是编辑文章中要用到图片文件等媒体,那么就应该在编辑器中进行这些操作,这样更方便;而不是在此处上传文件,但前往文章编辑器时候仍然寻找你所上传的文件</p>
+                    <h3>常见问题</h3>
+                    <ul style="list-style: decimal;">
+                        <li>为什么视频不能显示,播放?
+                            <p>非常抱歉,这可能属于gitee方面的原因,我暂时无法解决;gitee是不能直接播放mp4,ogg等格式的视频,你必须下载到本地;但是你可以上传格式为webm的视频,它能直接播放</p>
+                        </li>
+                        <li>除了文本文件,为什么其它文件不能更新
+                            <p>暂时不支持更新其它文件;除了文本文件</p>
+                        </li>
+                        <li>目录无法删除?
+                            <p>GiteeAPI并没有提供相关接口去实现删除目录的功能,因此你需要删除目录的时候你应该前往Gitee官网</p>
+                        </li>
+                        <li>为什么我成功上传文件之后,不能预览?
+                            <p>很简单,上传文件后,你需要进行gitee pages的部署;在文章编辑器中点击左侧小角标,打开模态框后选择"文件",然后点击"Pages部署"</p>
+                        </li>
+                    </ul>
+                    <br>
+                    发生错误时,请注意提示信息,如果出现无法判断的错误,请联系我帮助解决
+                </div>
+                <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
+                    <p>作者:RorinL</p>
+                    <p>随记:普通的打工人,对未来想躺平</p>
+                    <p><a href="https://www.rfbynet.club/" target="_blank">感谢你使用这个插件,希望你能够前往我的站点,点击一下里面的广告;多谢支持!</a></p>
+                    <hr>
+                    <p>联系&反馈:<a class="ml-1 mr-1" target="_blank"
+                            href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=VGZnZmJtYGZjYWwUJSV6Nzs5"
+                            style="text-decoration:none;"><img
+                                src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_11.png"></a>
+                    </p>
+                    <p><b>特此声明:插件基于gitee开放文档开发,并不代表本人持有Gitee</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <h2 class="mt-4">Drawing-Bed-for-gitee</h2>
+            <p class="mb-4">基于Gitee的图床,可以将图片,文件上传到Gitee仓库;可以将你的图片保存到码云仓库,大大节省你的磁盘空间,但不止于图片,视频和其它文件均可</p>
+            <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://liang-ronglin.gitee.io/domaindata/blogsite/images/screenshot-1.png"
+                            class="d-block w-100" alt="快速查看,便捷的操作">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="text-dark">快速查看,便捷的操作</h5>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://liang-ronglin.gitee.io/domaindata/blogsite/images/screenshot-2.png"
+                            class="d-block w-100" alt="文件列表展示,层级清晰简明">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="text-dark">文件列表展示,层级清晰简明</h5>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions"
+                    data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">上一个</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-target="#carouselExampleCaptions"
+                    data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">下一个</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
